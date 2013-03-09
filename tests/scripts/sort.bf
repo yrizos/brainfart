@@ -15,7 +15,7 @@ Brainfart supports the typical [Brainfuck commands](http://en.wikipedia.org/wiki
 	[   if the byte at the data pointer is zero, then instead of moving the instruction pointer forward to the next command, jump it forward to the command after the matching ] command.
 	]   if the byte at the data pointer is nonzero, then instead of moving the instruction pointer forward to the next command, jump it back to the command after the matching [ command.
 
-...and [Toadskin](http://esolangs.org/wiki/Toadskin "Toadskin is a minimal esoteric programming language based on combining aspects of brainfuck and Forth.") inspired named sequences. This:
+...plus [Toadskin](http://esolangs.org/wiki/Toadskin "Toadskin is a minimal esoteric programming language based on combining aspects of brainfuck and Forth.") inspired named sequences. This:
 
 	:MB5-----; :MF5+++++;
 	
