@@ -29,7 +29,7 @@ class VM
     /**
      * @param string|array $input
      */
-    public function __construct($input = array(), $loopLimit) {
+    public function __construct($input = array(), $loopLimit = 0) {
         $this->input     = new Input($input);
         $this->output    = new Output();
         $this->memory    = new Memory();
