@@ -29,9 +29,9 @@ class VM
      * @param string|array $input
      */
     public function __construct($input = array(), $loopLimit) {
-        $this->input  = new Input($input);
-        $this->output = new Output();
-        $this->memory = new Memory();
+        $this->input     = new Input($input);
+        $this->output    = new Output();
+        $this->memory    = new Memory();
         $this->loopLimit = is_numeric($loopLimit) && $loopLimit > 0 ? (int) $loopLimit : 0;
     }
 
@@ -53,5 +53,5 @@ class VM
     /**
      * @return int
      */
-    public function getLoopLimit() {return $this->loopLimit; }
+    public function getLoopLimit() { return $this->loopLimit; }
 }

@@ -4,7 +4,8 @@ namespace Brainfart\VM;
 
 class Output
 {
-    const FETCH_ARRAY = 0;
+
+    const FETCH_ARRAY  = 0;
     const FETCH_STRING = 1;
 
     private $output = array();
@@ -29,6 +30,5 @@ class Output
                 ? implode("", array_map("chr", $this->output))
                 : $this->output;
     }
-
 
 }

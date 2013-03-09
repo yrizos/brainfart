@@ -4,6 +4,7 @@ namespace Brainfart\VM;
 
 class Input
 {
+
     private $input = array();
 
     /**
@@ -20,10 +21,10 @@ class Input
      * @throws \InvalidArgumentException
      */
     public function store($input) {
-        if(is_scalar($input)) $input = str_split(trim($input));
-        if(!is_array($input)) throw new \InvalidArgumentException();
+        if (is_scalar($input)) $input = str_split(trim($input));
+        if (!is_array($input)) throw new \InvalidArgumentException();
 
-        foreach($input as $key => $value) $input[$key] = is_numeric($value) ? (int) $value : ord($value);
+        foreach ($input as $key => $value) $input[$key] = is_numeric($value) ? (int) $value : ord($value);
 
         $this->input = $input;
 
@@ -39,6 +40,5 @@ class Input
                 ? array_shift($this->input)
                 : 0;
     }
-
 
 }

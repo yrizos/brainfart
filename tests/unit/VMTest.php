@@ -12,10 +12,10 @@ class VMTest extends PHPUnit_Framework_TestCase
         $text  = "Hello world!";
         $input = new Input($text);
 
-        $text  = str_split($text);
-        $text  = array_map("ord", $text);
+        $text = str_split($text);
+        $text = array_map("ord", $text);
 
-        foreach($text as $character) $this->assertEquals($character, $input->fetch());
+        foreach ($text as $character) $this->assertEquals($character, $input->fetch());
 
         $this->assertEquals(0, $input->fetch());
     }
@@ -25,7 +25,7 @@ class VMTest extends PHPUnit_Framework_TestCase
         $input  = new Input($text);
         $output = new Output();
 
-        while($character = $input->fetch()) $output->store($character);
+        while ($character = $input->fetch()) $output->store($character);
 
         $this->assertEquals($text, $output->fetch(Output::FETCH_STRING));
 
@@ -33,7 +33,7 @@ class VMTest extends PHPUnit_Framework_TestCase
         $text  = array_map("ord", $text);
         $array = $output->fetch(Output::FETCH_ARRAY);
 
-        foreach($text as $key => $character) $this->assertEquals($character, $array[$key]);
+        foreach ($text as $key => $character) $this->assertEquals($character, $array[$key]);
     }
 
     public function testMemory() {
