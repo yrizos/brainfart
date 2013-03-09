@@ -2,6 +2,7 @@
 
 namespace Brainfart\VM;
 
+/** @noinspection PhpDocSignatureInspection */
 class Output
 {
 

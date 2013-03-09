@@ -57,6 +57,8 @@ class LoopOperation implements OperationInterface
 
     /**
      * @param \Brainfart\VM\VM $vm
+     *
+     * @throws \RuntimeException
      */
     public function execute(VM $vm) {
         $operations = $this->getOperations();
