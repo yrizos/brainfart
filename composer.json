@@ -6,7 +6,8 @@
     "authors":[
         {
             "name":"Yannis Rizos",
-            "email":"yrizos@gmail.com"
+            "email":"yrizos@gmail.com",
+            "homepage":"https://github.com/yrizos/brainfart"
         }
     ],
     "require":{
