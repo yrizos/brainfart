@@ -1,0 +1,13 @@
+# phpStorm
+.idea
+
+# quick & dirty
+examples
+
+# build (phing + phpunit coverage report)
+build
+
+# composer
+composer.phar
+vendor
+
