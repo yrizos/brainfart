@@ -1,6 +1,8 @@
 #Brainfart
 
-Brainfart is an over-engineered [Brainfuck interpreter](http://esolangs.org/wiki/Brainfuck), written in PHP. It's a weekend pet project, nowhere near complete and slow as hell (by design).
+Brainfart is an over-engineered [Brainfuck interpreter](http://esolangs.org/wiki/Brainfuck), written in PHP.
+
+It's a weekend pet project, nowhere near complete and slow as hell (by design).
 
 ##Syntax
 
@@ -26,7 +28,7 @@ Brainfart is an over-engineered [Brainfuck interpreter](http://esolangs.org/wiki
 
     mf5mf5[>mf5++>mf5mf5>+++>+<<<<-]>++.>+.mf5++..+++.>++.<<mf5mf5mf5.>.+++.mb3mb3.mb3mb3--.>+.>.:mf5+++++;:mb3---; 
 
-Will output: `Hello World!\n`
+Will output: `Hello World!\n` (hopefully)
 
 ##Design
 
@@ -40,5 +42,14 @@ There are probably a ton of bugs. They are all intentional, to make coding in Br
 
 ##Boring
 
-Brainfart is licensed under the [WTFPL](http://www.wtfpl.net/), see `license` for the full text of the license.
+**License**
+
+Brainfart is licensed under the [WTFPL](http://www.wtfpl.net/), see `license` for the full text.
+
+**Requirements**
+
+- PHP 5.3+
+- [Composer](http://getcomposer.org/) [optional]
+- [PHPUnit 3.7+](http://www.phpunit.de/manual/current/en/) [optional]
+- [Phing 2.4+](http://www.phing.info/) [optional]
 

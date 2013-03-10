@@ -11,10 +11,10 @@ class Loader
     private $source = "";
 
     /**
-     * @param string|file $source
+     * @param null|string $source
      */
-    public function __construct($source) {
-        $this->loadSource($source);
+    public function __construct($source = null) {
+        if (!is_null($source)) $this->loadSource($source);
     }
 
     /**

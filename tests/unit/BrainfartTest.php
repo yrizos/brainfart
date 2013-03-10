@@ -8,29 +8,31 @@ class BrainfartTest extends PHPUnit_Framework_TestCase
 
     private $dir = "";
 
+    /**
+     * @var Brainfart
+     */
+    private $bf;
+
     protected function setUp() {
         $this->dir = realpath(__DIR__ . "/../scripts");
+        $this->bf  = new Brainfart(1000, true);
     }
 
     public function testHelloWorld() {
-        $output = Brainfart::run($this->dir . "/helloworld.bf", "", Output::FETCH_STRING);
+        $output = $this->bf->run($this->dir . "/helloworld.bf", "", Output::FETCH_STRING);
 
         $this->assertEquals("Hello World!\n", $output);
     }
 
-    public function testHelloWorld_Skintoad() {
-        $output = Brainfart::run($this->dir . "/helloworld.skintoad.bf", "", Output::FETCH_STRING);
+    public function testHelloWorld_Sequences() {
+        $output = $this->bf->run($this->dir . "/helloworld.sequences.bf", "", Output::FETCH_STRING);
 
         $this->assertEquals("Hello World!\n", $output);
     }
 
     public function testSort() {
-        $length = 20;
-        $input  = array();
-
-        for ($i = 0; $i < $length; $i++) $input[] = rand(0, 100);
-
-        $output = Brainfart::run($this->dir . "/sort.bf", $input);
+        $input  = array(100, 2, 50, 3, 1, 20, 1, 90, 40);
+        $output = $this->bf->run($this->dir . "/sort.bf", $input);
         sort($input);
 
         $this->assertEquals($input, $output);

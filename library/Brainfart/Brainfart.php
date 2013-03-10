@@ -9,14 +9,60 @@ use Brainfart\VM\VM;
 class Brainfart
 {
 
-    public static function run($source, $input = "", $fetchMode = Output::FETCH_ARRAY) {
-        $parser = new Parser($source);
-        $app    = $parser->parse(true);
-        $vm     = new VM($input);
+    private $optimize = true;
 
-        $app->execute($vm);
+    /**
+     * @var VM
+     */
+    private $vm;
 
-        return $vm->getOutput()->fetch($fetchMode);
+    /**
+     * @var Parser
+     */
+    private $parser;
+
+    /**
+     * @var Output
+     */
+    private $output;
+
+    /**
+     * @param int  $loopLimit
+     * @param bool $optimize
+     */
+    public function __construct($loopLimit = 100, $optimize = true) {
+        $this->vm     = new VM(array(), $loopLimit);
+        $this->parser = new Parser();
+
+        $this->setOptimize($optimize);
     }
 
+    /**
+     * @param bool $optimize
+     *
+     * @return Brainfart
+     */
+    public function setOptimize($optimize = true) {
+        $this->optimize = ($optimize === true);
+
+        return $this;
+    }
+
+    /**
+     * @param string $source
+     * @param string $input
+     * @param int    $fetchMode
+     *
+     * @return array|string
+     */
+    public function run($source, $input = "", $fetchMode = Output::FETCH_ARRAY) {
+        $this->parser->loadSource($source);
+        $app = $this->parser->parse($this->optimize);
+
+        $this->vm->init($input);
+
+        $app->execute($this->vm);
+
+        return $this->vm->getOutput()->fetch($fetchMode);
+    }
 }

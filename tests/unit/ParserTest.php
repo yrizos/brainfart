@@ -30,7 +30,7 @@ class ParserTest extends PHPUnit_Framework_TestCase
     }
 
     public function testLoadSkinToad() {
-        $loader = new Loader($this->dir . "/helloworld.skintoad.bf");
+        $loader = new Loader($this->dir . "/helloworld.sequences.bf");
 
         $expected = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.";
         $skintoad = $loader->getSource();
