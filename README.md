@@ -40,5 +40,5 @@ There are probably a ton of bugs. They are all intentional, to make coding in Br
 
 ##Boring
 
-Brainfart is licensed under the [WTFPL](http://www.wtfpl.net/), see `LICENSE.txt` for the full text of the license.
+Brainfart is licensed under the [WTFPL](http://www.wtfpl.net/), see `license` for the full text of the license.
 
