@@ -24,7 +24,7 @@ class Parser extends Loader
      * @return \Brainfart\Operations\LoopOperation
      */
     public function parse($optimize = true) {
-        if (is_bool($this->getOptimize())) $optimize = $this->getOptimize();
+        if ($this->getFlag("no_optimization") === true) $optimize = false;
 
         $operations = $this->tokenize($this->getSource(), $optimize);
 

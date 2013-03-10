@@ -16,15 +16,17 @@ class Loader
     private $source = "";
 
     /**
-     * @var bool
+     * @var array
      */
-    private $optimize;
+    private $flags = array();
 
     /**
      * @param null|string $source
      */
     public function __construct($source = null) {
         if (!is_null($source)) $this->loadSource($source);
+
+        $this->setFlag("no_optimization", false)->setFlag("string_output", false);
     }
 
     /**
@@ -59,10 +61,32 @@ class Loader
     }
 
     /**
-     * @return bool
+     * @return null|bool
      */
-    public function getOptimize() {
-        return $this->optimize;
+    public function getFlag($flag = null) {
+        if (is_null($flag) || !is_scalar($flag)) return $this->flags;
+
+        $flag = strtolower(trim($flag));
+
+        return
+            isset($this->flags[$flag])
+                ? $this->flags[$flag]
+                : null;
+    }
+
+    /**
+     * @param string    $flag
+     * @param bool|null $value
+     *
+     * @return Loader
+     */
+    protected function setFlag($flag, $value = null) {
+        $flag = (!is_scalar($flag)) ? "unknown" : strtolower(trim($flag));
+        if (!is_null($value)) $value = ($value === true);
+
+        $this->flags[$flag] = $value;
+
+        return $this;
     }
 
     /**
@@ -90,9 +114,13 @@ class Loader
      * @return string mixed
      */
     private function prepare($source) {
-        if (strpos($source, "@@") !== false) {
-            $this->optimize = false;
-            $source         = str_replace("@@", "", $source);
+        $flags = array("@@" => "no_optimization", "$$" => "string_output");
+
+        foreach ($flags as $operator => $flag) {
+            if (strpos($source, $operator) !== false) {
+                $this->setFlag($flag, true);
+                $source = str_replace($operator, "", $source);
+            }
         }
 
         $pos = strpos($source, "!!");
