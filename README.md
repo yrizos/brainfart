@@ -64,7 +64,7 @@ Brainfart is licensed under the [WTFPL](http://www.wtfpl.net/), see `license` fo
 
 **Requirements**
 
-- PHP 5.3+
+- PHP 5.4+
 - [Composer](http://getcomposer.org/) [optional]
 - [PHPUnit 3.7+](http://www.phpunit.de/manual/current/en/) [optional]
 - [Phing 2.4+](http://www.phing.info/) [optional]
