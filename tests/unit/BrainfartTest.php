@@ -37,4 +37,12 @@ class BrainfartTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($input, $output);
     }
+
+    public function testSort_2() {
+        $source   = "4,1,3,2!!>>,[>>,]<<[[-<+<]>[>[>>]<[.[-]<[[>>+<<-]<]>>]>]<<]";
+        $output   = $this->bf->run($source);
+        $expected = array(1, 2, 3, 4);
+
+        $this->assertEquals($expected, $output);
+    }
 }

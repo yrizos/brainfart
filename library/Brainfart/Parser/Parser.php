@@ -3,6 +3,7 @@
 namespace Brainfart\Parser;
 
 use Brainfart\Operations\LoopOperation;
+use Brainfart\Operations\SleepOperation;
 use Brainfart\Operations\ChangeOperation;
 use Brainfart\Operations\MoveOperation;
 use Brainfart\Operations\InputOperation;
@@ -125,6 +126,8 @@ class Parser extends Loader
             case ",":
                 $operation = new InputOperation();
                 break;
+            case "~":
+                $operation = new SleepOperation();
         }
 
         return $operation;

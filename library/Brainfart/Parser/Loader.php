@@ -133,7 +133,7 @@ class Loader
      * @return string
      */
     private function cleanup($source) {
-        return preg_replace('/[^<|>|\-|\+|\.|\,|\]|\[]/', "", $source);
+        return preg_replace('/[^<|>|\-|\+|\.|\~|\,|\]|\[]/', "", $source);
     }
 
 }

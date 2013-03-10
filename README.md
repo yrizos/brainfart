@@ -2,7 +2,7 @@
 
 Brainfart is an over-engineered [Brainfuck interpreter](http://esolangs.org/wiki/Brainfuck), written in PHP.
 
-It's a weekend pet project, nowhere near complete and slow as hell (by design).
+It's a weekend pet project, nowhere near complete and slow as hell (by design). 
 
 ##Syntax
 
@@ -38,6 +38,11 @@ Will output: `Hello World!\n` (hopefully)
 
 `@@` will turn off peephole optimization. This may or may not weaken performance.
 
+`$$` will force a string output, instead of the default array.
+
+**Misc**
+
+- `~` Sleep for as many seconds as the value of the byte at the memory pointer. This will definitely weaken performance.
 
 ##Design
 

@@ -57,11 +57,14 @@ class Brainfart
      */
     public function run($source, $input = "", $fetchMode = Output::FETCH_ARRAY) {
         $this->parser->loadSource($source);
-        $app = $this->parser->parse($this->optimize);
+        $appLoop  = $this->parser->parse($this->optimize);
+        $appInput = $this->parser->getInput();
+
+        if (!empty($appInput)) $input = $appInput;
 
         $this->vm->init($input);
 
-        $app->execute($this->vm);
+        $appLoop->execute($this->vm);
 
         return $this->vm->getOutput()->fetch($fetchMode);
     }
