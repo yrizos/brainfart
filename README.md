@@ -36,7 +36,7 @@ Will output: `Hello World!\n` (hopefully)
 
     5,10,15,20!!>>,[>>,]<<[[-<+<]>[>[>>]<[.[-]<[[>>+<<-]<]>>]>]<<]
 
-`@@` will turn off peephole optimization. 
+`@@` will turn off peephole optimization. This may or may not weaken performance.
 
 
 ##Design
