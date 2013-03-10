@@ -1,7 +1,7 @@
 {
     "name":"yrizos/brainfart",
     "type":"interpreter",
-    "license":"MIT",
+    "license":"WTFPL",
     "description":"An over-engineered Brainfuck interpreter.",
     "authors":[
         {

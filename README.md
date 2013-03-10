@@ -1,60 +1,44 @@
 #Brainfart
 
-An over-engineered Brainfuck intepreter, written in PHP.
+Brainfart is an over-engineered [Brainfuck interpreter](http://esolangs.org/wiki/Brainfuck), written in PHP. It's a weekend pet project, nowhere near complete and slow as hell (by design).
 
-##Supported syntax
+##Syntax
 
-Brainfart supports the typical [Brainfuck commands](http://en.wikipedia.org/wiki/Brainfuck#Commands "Brainfuck commands on Wikipedia"):
+**Memory operations**
 
-	>   increment the data pointer (to point to the next cell to the right).
-	<   decrement the data pointer (to point to the next cell to the left).
-	+   increment (increase by one) the byte at the data pointer.
-	-   decrement (decrease by one) the byte at the data pointer.
-	.   output the byte at the data pointer.
-	,   accept one byte of input, storing its value in the byte at the data pointer.
-	[   if the byte at the data pointer is zero, then instead of moving the instruction pointer forward to the next command, jump it forward to the command after the matching ] command.
-	]   if the byte at the data pointer is nonzero, then instead of moving the instruction pointer forward to the next command, jump it back to the command after the matching [ command.
+- `>` Moves the memory pointer to the right.
+- `<` Moves the memory pointer to the left.
+- `+` Increments the byte at the memory pointer by one.
+- `-` Decrements the byte at the memory pointer by one.
 
-...plus [Toadskin](http://esolangs.org/wiki/Toadskin "Toadskin is a minimal esoteric programming language based on combining aspects of brainfuck and Forth.") inspired named sequences. This:
+**Input / Output operations**
 
-	:MB5-----; :MF5+++++;
+- `.` Outputs the byte at the memory pointer.
+- `,` Accepts one byte of input and stores it at the memory pointer.
 
-	MF5 MF5             initialize counter (cell #0) to 10
-	[                       use loop to set the next four cells to 70/100/30/10
-	    > MF5 ++              add  7 to cell #1
-	    > MF5 MF5           add 10 to cell #2
-	    > +++                   add  3 to cell #3
-	    > +                     add  1 to cell #4
-	    <<<< -                  decrement counter (cell #0)
-	]
-	> ++ .                  print 'H'
-	> + .                   print 'e'
-	MF5 ++ .                print 'l'
-	.                       print 'l'
-	+++ .                   print 'o'
-	> ++ .                  print ' '
-	<< MF5 MF5 MF5 .        print 'W'
-	> .                     print 'o'
-	+++ .                   print 'r'
-	Mb5 - .                 print 'l'
-	Mb5 --- .               print 'd'
-	> + .                   print '!'
-	> .                     print '\n'
+**Loops**
 
-will generate this:
+`[` If the byte at the memory pointer is zero, jump to the command after the matching `]`.
 
-    ++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.
+**Named sequences**
 
-Non supported characters are ignored.
+`:<alpha><brainfuck>;` will replace occurrences of `<alpha>` with `<brainfuck>`. 
 
-##Peephole optimization
+    mf5mf5[>mf5++>mf5mf5>+++>+<<<<-]>++.>+.mf5++..+++.>++.<<mf5mf5mf5.>.+++.mb3mb3.mb3mb3--.>+.>.:mf5+++++;:mb3---; 
 
-Consecutive similar data pointer commands are grouped. This script:
+Will output: `Hello World!\n`
 
-    +++++
+##Design
 
-Will be interpreted as a single command that increases the byte at the data pointer by 5. The same for `-`, `>` and `<`.
+**Peephole optimization** 
 
-##Bugs
+Consecutive similar memory pointer commands will be grouped. `+++++` will be interpreted as a single command that increments the byte at the memory pointer by five.    
 
-There probably are a few. Meh.
+**Bugs**
+
+There are probably a ton of bugs. They are all intentional, to make coding in Brainfart a bit more challenging and fun. `</lie>`
+
+##Boring
+
+Brainfart is licensed under the [WTFPL](http://www.wtfpl.net/), see `LICENSE.txt` for the full text of the license.
+
