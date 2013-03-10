@@ -29,6 +29,23 @@ class ParserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $loader->getSource());
     }
 
+    public function testParserInput() {
+        $source    = "5,10,15,20!!>>,[>>,]<<[[-<+<]>[>[>>]<[.[-]<[[>>+<<-]<]>>]>]<<]";
+        $expInput  = array("5", "10", "15", "20");
+        $expSource = ">>,[>>,]<<[[-<+<]>[>[>>]<[.[-]<[[>>+<<-]<]>>]>]<<]";
+
+        $loader = new Loader($source);
+
+        $this->assertEquals($expInput, $loader->getInput());
+        $this->assertEquals($expSource, $loader->getSource());
+
+        $source = "5 , 10 , 15 , 20 , !! >>,[>>,]<<[[-<+<]>[>[>>]<[.[-]<[[>>+<<-]<]>>]>]<<]";
+        $loader->loadSource($source);
+
+        $this->assertEquals($expInput, $loader->getInput());
+        $this->assertEquals($expSource, $loader->getSource());
+    }
+
     public function testLoadSkinToad() {
         $loader = new Loader($this->dir . "/helloworld.sequences.bf");
 

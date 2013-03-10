@@ -6,9 +6,19 @@ class Loader
 {
 
     /**
+     * @var array
+     */
+    private $input;
+
+    /**
      * @var string
      */
     private $source = "";
+
+    /**
+     * @var bool
+     */
+    private $optimize;
 
     /**
      * @param null|string $source
@@ -42,11 +52,57 @@ class Loader
     }
 
     /**
+     * @return array
+     */
+    public function getInput() {
+        return $this->input;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getOptimize() {
+        return $this->optimize;
+    }
+
+    /**
+     * @param string $input
+     *
+     * @return Loader
+     * @throws \InvalidArgumentException
+     */
+    public function setInput($input) {
+        if (!is_scalar($input)) throw new \InvalidArgumentException();
+
+        $input = (string) $input;
+        $input = trim($input, ", ");
+        $input = explode(",", $input);
+        $input = array_map("trim", $input);
+
+        $this->input = $input;
+
+        return $this;
+    }
+
+    /**
      * @param string $source
      *
      * @return string mixed
      */
     private function prepare($source) {
+        if (strpos($source, "@@") !== false) {
+            $this->optimize = false;
+            $source         = str_replace("@@", "", $source);
+        }
+
+        $pos = strpos($source, "!!");
+        if ($pos !== false) {
+            $input  = substr($source, 0, $pos);
+            $source = substr($source, $pos + 2);
+
+            $this->setInput($input);
+        }
+
         return preg_replace('/\s+/', "", strtolower($source));
     }
 

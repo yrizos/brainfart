@@ -30,11 +30,22 @@ It's a weekend pet project, nowhere near complete and slow as hell (by design).
 
 Will output: `Hello World!\n` (hopefully)
 
+**Interpreter instructions** 
+
+`!!` separates input from commands. If present, whatever is left of it will be interpreted as comma separated input.
+
+    5,10,15,20!!>>,[>>,]<<[[-<+<]>[>[>>]<[.[-]<[[>>+<<-]<]>>]>]<<]
+
+`@@` will turn off peephole optimization. 
+
+
 ##Design
 
 **Peephole optimization** 
 
 Consecutive similar memory pointer commands will be grouped. `+++++` will be interpreted as a single command that increments the byte at the memory pointer by five.    
+
+This may or may not improve performance. 
 
 **Bugs**
 
