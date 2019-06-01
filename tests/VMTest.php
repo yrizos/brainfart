@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 use Brainfart\VM\Input;
 use Brainfart\VM\Memory;
@@ -23,6 +23,22 @@ class VMTest extends TestCase
         $this->assertSame(0, $input->fetch());
     }
 
+    public function testMemory(): void
+    {
+        $memory = new Memory();
+
+        $this->assertSame(0, $memory->fetch());
+
+        $memory->store(10);
+        $this->assertSame(10, $memory->fetch());
+
+        $memory->move(1);
+        $this->assertSame(0, $memory->fetch());
+
+        $memory->move(-1);
+        $this->assertSame(10, $memory->fetch());
+    }
+
     public function testOutput(): void
     {
         $text   = 'Hello world!';
@@ -42,22 +58,6 @@ class VMTest extends TestCase
         foreach ($text as $key => $character) {
             $this->assertSame($character, $array[$key]);
         }
-    }
-
-    public function testMemory(): void
-    {
-        $memory = new Memory();
-
-        $this->assertSame(0, $memory->fetch());
-
-        $memory->store(10);
-        $this->assertSame(10, $memory->fetch());
-
-        $memory->move(1);
-        $this->assertSame(0, $memory->fetch());
-
-        $memory->move(-1);
-        $this->assertSame(10, $memory->fetch());
     }
 
     public function testVM(): void
