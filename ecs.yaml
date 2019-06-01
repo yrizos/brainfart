@@ -1,0 +1,11 @@
+imports:
+  - { resource: 'vendor/symplify/easy-coding-standard/config/set/common.yaml'}
+  - { resource: 'vendor/symplify/easy-coding-standard/config/set/psr2.yaml'}
+  - { resource: 'vendor/symplify/easy-coding-standard/config/set/php71.yaml'}
+  - { resource: 'vendor/symplify/easy-coding-standard/config/set/clean-code.yaml'}
+
+parameters: 
+  skip:
+    PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer: ~
+
+    PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\AssignmentInConditionSniff.FoundInWhileCondition:

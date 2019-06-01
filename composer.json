@@ -1,21 +1,40 @@
 {
-    "name":"yrizos/brainfart",
-    "type":"interpreter",
-    "license":"WTFPL",
-    "description":"An over-engineered Brainfuck interpreter.",
-    "authors":[
+    "name": "yrizos/brainfart",
+    "type": "interpreter",
+    "license": "MIT",
+    "description": "An over-engineered Brainfuck interpreter.",
+    "authors": [
         {
-            "name":"Yannis Rizos",
-            "email":"yrizos@gmail.com",
-            "homepage":"https://github.com/yrizos/brainfart"
+            "name": "Yannis Rizos",
+            "email": "yrizos@gmail.com"
         }
     ],
-    "require":{
-        "php":">=5.4.0"
+    "require": {
+        "php": ">=7.1"
     },
-    "autoload":{
-        "psr-0":{
-            "Brainfart":"library/"
+    "require-dev": {
+        "phpunit/phpunit": "^8.1",
+        "phpstan/phpstan": "^0.11",
+        "symplify/easy-coding-standard": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Brainfart\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Brainfart\\": "tests/"
+        }
+    },
+    "scripts": {
+        "build": [
+            "@ecs-check",
+            "@tests"
+        ],
+        "tests": "phpunit",
+        "stan": "phpstan analyse src --level=max",
+        "ecs-fix": "ecs check src tests --fix",
+        "ecs-check": "ecs check src"
     }
 }

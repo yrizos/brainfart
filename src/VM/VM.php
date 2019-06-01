@@ -1,11 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Brainfart\VM;
 
 /** @noinspection PhpDocSignatureInspection */
 class VM
 {
-
     /**
      * @var Input
      */
@@ -27,16 +26,18 @@ class VM
     private $loopLimit = 0;
 
     /**
-     * @param string|array $input
+     * @param scalar|scalar[] $input
      */
-    public function __construct($input = array(), $loopLimit = 0) {
+    public function __construct($input = [], int $loopLimit = 0)
+    {
         $this->init($input, $loopLimit);
     }
 
     /**
-     * @return VM
+     * @param scalar|scalar[] $input
      */
-    public function init($input = array(), $loopLimit = 0) {
+    public function init($input = [], int $loopLimit = 0): self
+    {
         $this->input  = new Input($input);
         $this->output = new Output();
         $this->memory = new Memory();
@@ -49,31 +50,39 @@ class VM
     /**
      * @return Input
      */
-    public function getInput() { return $this->input; }
+    public function getInput(): Input
+    {
+        return $this->input;
+    }
 
     /**
      * @return Output
      */
-    public function getOutput() { return $this->output; }
+    public function getOutput(): Output
+    {
+        return $this->output;
+    }
 
     /**
      * @return Memory
      */
-    public function getMemory() { return $this->memory; }
+    public function getMemory(): Memory
+    {
+        return $this->memory;
+    }
 
     /**
-     * @param int $loopLimit
-     *
      * @return VM
      */
-    public function setLoopLimit($loopLimit = 100) {
+    public function setLoopLimit(int $loopLimit = 100): self
+    {
         $this->loopLimit = is_numeric($loopLimit) && $loopLimit > 0 ? (int) $loopLimit : 0;
 
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getLoopLimit() { return $this->loopLimit; }
+    public function getLoopLimit(): int
+    {
+        return $this->loopLimit;
+    }
 }

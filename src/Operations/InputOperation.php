@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Brainfart\Operations;
 
@@ -6,12 +6,8 @@ use Brainfart\VM\VM;
 
 class InputOperation implements OperationInterface
 {
-
-    /**
-     * @param \Brainfart\VM\VM $vm
-     */
-    public function execute(VM $vm) {
+    public function execute(VM $vm): void
+    {
         $vm->getMemory()->store($vm->getInput()->fetch());
     }
-
 }

@@ -1,62 +1,61 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Brainfart\Parser;
 
-use Brainfart\Operations\LoopOperation;
-use Brainfart\Operations\SleepOperation;
 use Brainfart\Operations\ChangeOperation;
-use Brainfart\Operations\MoveOperation;
 use Brainfart\Operations\InputOperation;
-use Brainfart\Operations\OutputOperation;
+use Brainfart\Operations\LoopOperation;
+use Brainfart\Operations\MoveOperation;
 use Brainfart\Operations\MutableInterface;
+use Brainfart\Operations\OperationInterface;
+use Brainfart\Operations\OutputOperation;
+use Brainfart\Operations\SleepOperation;
 
 class Parser extends Loader
 {
-
     /**
      * @var LoopOperation
      */
     private $operations;
 
-    /**
-     * @param bool $optimize
-     *
-     * @return \Brainfart\Operations\LoopOperation
-     */
-    public function parse($optimize = true) {
-        if ($this->getFlag("no_optimization") === true) $optimize = false;
+    public function parse(bool $optimize = true): \Brainfart\Operations\LoopOperation
+    {
+        if ($this->getFlag('no_optimization') === true) {
+            $optimize = false;
+        }
 
         $operations = $this->tokenize($this->getSource(), $optimize);
 
         return $this->operations = new LoopOperation($operations, true);
     }
 
-    /**
-     * @return \Brainfart\Operations\LoopOperation
-     */
-    public function getOperations() {
+    public function getOperations(): \Brainfart\Operations\LoopOperation
+    {
         return $this->operations;
     }
 
     /**
-     * @param string $source
-     * @param bool   $optimize
-     *
-     * @return array
-     * @throws \LogicException
+     * @return OperationInterface[]
      */
-    private function tokenize($source, $optimize) {
-        $result   = array();
+    private function tokenize(string $source, bool $optimize): array
+    {
+        $result   = [];
         $optimize = $optimize === true;
         $length   = strlen($source);
 
         for ($i = 0; $i < $length; $i++) {
-            $token = isset($source[$i]) ? $source[$i] : false;
-            if (!$token) break;
+            $token = $source[$i] ?? false;
 
-            if ($token == "[") {
+            if (! $token) {
+                break;
+            }
+
+            if ($token === '[') {
                 $loopEnd = $this->findLoopEnd(substr($source, $i + 1));
-                if (!$loopEnd) throw new \LogicException("Neverending loop.");
+
+                if (! $loopEnd) {
+                    throw new \LogicException('Neverending loop.');
+                }
 
                 $loopSource = substr($source, $i + 1, $loopEnd);
                 $loopTokens = $this->tokenize($loopSource, $optimize);
@@ -65,12 +64,15 @@ class Parser extends Loader
                 $i += $loopEnd + 1;
             } else {
                 $operation = $this->getOperation($token);
-                if (!$operation) continue;
+
+                if (! $operation) {
+                    continue;
+                }
 
                 if ($optimize && ($operation instanceof MutableInterface)) {
                     $index    = count($result) - 1;
-                    $previous = isset($result[$index]) ? $result[$index] : false;
-                    $combined = ($previous instanceof MutableInterface) ? $previous->combine($operation) : false;
+                    $previous = $result[$index] ?? false;
+                    $combined = $previous instanceof MutableInterface ? $previous->combine($operation) : false;
 
                     if ($combined) {
                         $result[$index] = $combined;
@@ -85,52 +87,47 @@ class Parser extends Loader
         return $result;
     }
 
-    /**
-     * @param $source
-     *
-     * @return int
-     */
-    private function findLoopEnd($source) {
-        $posCloseBracket = strpos($source, "]");
-        $posOpenBracket  = strpos($source, "[");
+    private function findLoopEnd(string $source): int
+    {
+        $posCloseBracket = strpos($source, ']');
+        $posOpenBracket  = strpos($source, '[');
 
-        if ($posOpenBracket === false || $posCloseBracket < $posOpenBracket) return $posCloseBracket;
-        $source[$posOpenBracket] = $source[$posCloseBracket] = "_";
+        if ($posOpenBracket === false || $posCloseBracket < $posOpenBracket) {
+            return $posCloseBracket;
+        }
+
+        $source[$posOpenBracket] = $source[$posCloseBracket] = '_';
 
         return $this->findLoopEnd($source);
     }
 
-    /**
-     * @param $token
-     *
-     * @return bool|\Brainfart\Operations\ChangeOperation|\Brainfart\Operations\MoveOperation|InputOperation|OutputOperation
-     */
-    private function getOperation($token) {
-        $operation = false;
+    private function getOperation(string $token): ?OperationInterface
+    {
+        $operation = null;
+
         switch ($token) {
-            case ">":
+            case '>':
                 $operation = new MoveOperation(1);
                 break;
-            case "<":
+            case '<':
                 $operation = new MoveOperation(-1);
                 break;
-            case "+":
+            case '+':
                 $operation = new ChangeOperation(1);
                 break;
-            case "-":
+            case '-':
                 $operation = new ChangeOperation(-1);
                 break;
-            case ".":
+            case '.':
                 $operation = new OutputOperation();
                 break;
-            case ",":
+            case ',':
                 $operation = new InputOperation();
                 break;
-            case "~":
+            case '~':
                 $operation = new SleepOperation();
         }
 
         return $operation;
     }
-
 }

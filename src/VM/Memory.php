@@ -1,11 +1,17 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Brainfart\VM;
 
 class Memory
 {
+    /**
+     * @var int[]
+     */
+    private $memory = [];
 
-    private $memory = array();
+    /**
+     * @var int
+     */
     private $pointer = 0;
 
     /**
@@ -13,7 +19,8 @@ class Memory
      *
      * @return Memory
      */
-    public function move($value) {
+    public function move(int $value): self
+    {
         $this->pointer += is_numeric($value) ? (int) $value : 0;
 
         return $this;
@@ -22,7 +29,8 @@ class Memory
     /**
      * @return int
      */
-    public function fetch() {
+    public function fetch(): int
+    {
         return isset($this->memory[$this->pointer]) ? $this->memory[$this->pointer] : 0;
     }
 
@@ -31,10 +39,10 @@ class Memory
      *
      * @return Memory
      */
-    public function store($value) {
+    public function store(int $value): self
+    {
         $this->memory[$this->pointer] = $this->fetch() + (is_numeric($value) ? (int) $value : 0);
 
         return $this;
     }
-
 }
