@@ -10,5 +10,5 @@ before_script:
   - phpenv config-rm xdebug.ini || return 0
 
 script:
-  - composer phpstan
+  - composer stan
   - composer tests
