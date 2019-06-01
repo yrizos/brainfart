@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare (strict_types = 1);
 
 namespace Brainfart;
 
@@ -8,7 +8,7 @@ use Brainfart\VM\VM;
 
 class Brainfart
 {
-    public const VERSION = '0.1.3';
+    public const VERSION = '0.2.0';
 
     /**
      * @var bool
