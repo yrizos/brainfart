@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace Brainfart\Parser;
 
@@ -18,6 +18,11 @@ class Parser extends Loader
      */
     private $operations;
 
+    public function getOperations(): \Brainfart\Operations\LoopOperation
+    {
+        return $this->operations;
+    }
+
     public function parse(bool $optimize = true): \Brainfart\Operations\LoopOperation
     {
         if ($this->getFlag('no_optimization') === true) {
@@ -29,16 +34,57 @@ class Parser extends Loader
         return $this->operations = new LoopOperation($operations, true);
     }
 
-    public function getOperations(): \Brainfart\Operations\LoopOperation
+    private function findLoopEnd(string $source): int
     {
-        return $this->operations;
+        $posCloseBracket = strpos($source, ']');
+        $posOpenBracket  = strpos($source, '[');
+
+        if ($posOpenBracket === false || $posCloseBracket < $posOpenBracket) {
+            return $posCloseBracket;
+        }
+
+        $source[$posOpenBracket] = $source[$posCloseBracket] = '_';
+
+        return $this->findLoopEnd($source);
+    }
+
+    private function getOperation(string $token): ?OperationInterface
+    {
+        $operation = null;
+
+        switch ($token) {
+            case '>':
+                $operation = new MoveOperation(1);
+                break;
+            case '<':
+                $operation = new MoveOperation(-1);
+                break;
+            case '+':
+                $operation = new ChangeOperation(1);
+                break;
+            case '-':
+                $operation = new ChangeOperation(-1);
+                break;
+            case '.':
+                $operation = new OutputOperation();
+                break;
+            case ',':
+                $operation = new InputOperation();
+                break;
+            case '~':
+                $operation = new SleepOperation();
+        }
+
+        return $operation;
     }
 
     /**
      * @return OperationInterface[]
      */
-    private function tokenize(string $source, bool $optimize): array
-    {
+    private function tokenize(
+        string $source,
+        bool $optimize
+    ): array {
         $result   = [];
         $optimize = $optimize === true;
         $length   = strlen($source);
@@ -85,49 +131,5 @@ class Parser extends Loader
         }
 
         return $result;
-    }
-
-    private function findLoopEnd(string $source): int
-    {
-        $posCloseBracket = strpos($source, ']');
-        $posOpenBracket  = strpos($source, '[');
-
-        if ($posOpenBracket === false || $posCloseBracket < $posOpenBracket) {
-            return $posCloseBracket;
-        }
-
-        $source[$posOpenBracket] = $source[$posCloseBracket] = '_';
-
-        return $this->findLoopEnd($source);
-    }
-
-    private function getOperation(string $token): ?OperationInterface
-    {
-        $operation = null;
-
-        switch ($token) {
-            case '>':
-                $operation = new MoveOperation(1);
-                break;
-            case '<':
-                $operation = new MoveOperation(-1);
-                break;
-            case '+':
-                $operation = new ChangeOperation(1);
-                break;
-            case '-':
-                $operation = new ChangeOperation(-1);
-                break;
-            case '.':
-                $operation = new OutputOperation();
-                break;
-            case ',':
-                $operation = new InputOperation();
-                break;
-            case '~':
-                $operation = new SleepOperation();
-        }
-
-        return $operation;
     }
 }

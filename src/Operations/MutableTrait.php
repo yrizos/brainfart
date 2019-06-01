@@ -1,4 +1,4 @@
-<?php declare (strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Brainfart\Operations;
 
@@ -14,27 +14,14 @@ trait MutableTrait
         $this->setValue($value);
     }
 
-    public function setValue(int $value): MutableInterface
-    {
-        $this->value = is_numeric($value) ? (int) $value : 0;
-
-        return $this;
-    }
-
-    public function getValue(): int
-    {
-        return $this->value;
-    }
-
     /**
-     * @return bool|MutableTrait
+     * @return bool|MutableInterface
      */
     public function combine(MutableInterface $operation)
     {
         $class = static::class;
 
-        if ($operation instanceof $class)
-        {
+        if ($operation instanceof $class) {
             $this->setValue($this->getValue() + $operation->getValue());
 
             return $this;
@@ -43,4 +30,15 @@ trait MutableTrait
         return false;
     }
 
+    public function getValue(): int
+    {
+        return $this->value;
+    }
+
+    public function setValue(int $value): MutableInterface
+    {
+        $this->value = is_numeric($value) ? (int) $value : 0;
+
+        return $this;
+    }
 }

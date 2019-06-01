@@ -1,10 +1,12 @@
-#Brainfart
+# Brainfart
 
-Brainfart is an over-engineered [Brainfuck interpreter](http://esolangs.org/wiki/Brainfuck), written in PHP.
+Brainfart is [Brainfuck interpreter](http://esolangs.org/wiki/Brainfuck), in PHP.
 
-It's a weekend pet project, nowhere near complete and slow as hell (by design). 
+Try it out: 
 
-##Syntax
+    
+
+## Syntax
 
 **Memory operations**
 
@@ -44,7 +46,7 @@ Will output: `Hello World!\n` (hopefully)
 
 - `~` Sleep for as many seconds as the value of the byte at the memory pointer. This will definitely weaken performance.
 
-##Design
+## Design
 
 **Peephole optimization** 
 
@@ -55,18 +57,3 @@ This may or may not improve performance.
 **Bugs**
 
 There are probably a ton of bugs. They are all intentional, to make coding in Brainfart a bit more challenging and fun. `</lie>`
-
-##Boring
-
-**License**
-
-Brainfart is licensed under the [WTFPL](http://www.wtfpl.net/), see `license` for the full text.
-
-**Requirements**
-
-- PHP 5.4+
-- [Composer](http://getcomposer.org/) [optional]
-- [PHPUnit 3.7+](http://www.phpunit.de/manual/current/en/) [optional]
-- [Phing 2.4+](http://www.phing.info/) [optional]
-
-[![Build Status](https://travis-ci.org/yrizos/brainfart.png?branch=master)](https://travis-ci.org/yrizos/brainfart)

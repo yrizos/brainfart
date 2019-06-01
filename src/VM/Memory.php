@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace Brainfart\VM;
 
@@ -15,6 +15,14 @@ class Memory
     private $pointer = 0;
 
     /**
+     * @return int
+     */
+    public function fetch(): int
+    {
+        return isset($this->memory[$this->pointer]) ? $this->memory[$this->pointer] : 0;
+    }
+
+    /**
      * @param int $value
      *
      * @return Memory
@@ -24,14 +32,6 @@ class Memory
         $this->pointer += is_numeric($value) ? (int) $value : 0;
 
         return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function fetch(): int
-    {
-        return isset($this->memory[$this->pointer]) ? $this->memory[$this->pointer] : 0;
     }
 
     /**

@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "php": ">=7.1"
+        "php": ">=7.1",
+        "symfony/console": "^4.3"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.1",
@@ -36,5 +37,8 @@
         "stan": "phpstan analyse src --level=max",
         "ecs-fix": "ecs check src tests --fix",
         "ecs-check": "ecs check src"
-    }
+    },
+    "bin": [
+        "bin/brainfart"
+    ]
 }

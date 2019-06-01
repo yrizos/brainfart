@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace Brainfart\VM;
 
@@ -11,9 +11,9 @@ class VM
     private $input;
 
     /**
-     * @var Output
+     * @var int
      */
-    private $output;
+    private $loopLimit = 0;
 
     /**
      * @var Memory
@@ -21,30 +21,18 @@ class VM
     private $memory;
 
     /**
-     * @var int
+     * @var Output
      */
-    private $loopLimit = 0;
+    private $output;
 
     /**
      * @param scalar|scalar[] $input
      */
-    public function __construct($input = [], int $loopLimit = 0)
-    {
+    public function __construct(
+        $input = [],
+        int $loopLimit = 0
+    ) {
         $this->init($input, $loopLimit);
-    }
-
-    /**
-     * @param scalar|scalar[] $input
-     */
-    public function init($input = [], int $loopLimit = 0): self
-    {
-        $this->input  = new Input($input);
-        $this->output = new Output();
-        $this->memory = new Memory();
-
-        $this->setLoopLimit($loopLimit);
-
-        return $this;
     }
 
     /**
@@ -55,12 +43,9 @@ class VM
         return $this->input;
     }
 
-    /**
-     * @return Output
-     */
-    public function getOutput(): Output
+    public function getLoopLimit(): int
     {
-        return $this->output;
+        return $this->loopLimit;
     }
 
     /**
@@ -72,17 +57,36 @@ class VM
     }
 
     /**
-     * @return VM
+     * @return Output
      */
-    public function setLoopLimit(int $loopLimit = 100): self
+    public function getOutput(): Output
     {
-        $this->loopLimit = is_numeric($loopLimit) && $loopLimit > 0 ? (int) $loopLimit : 0;
+        return $this->output;
+    }
+
+    /**
+     * @param string|string[] $input
+     */
+    public function init(
+        $input = [],
+        int $loopLimit = 0
+    ): self {
+        $this->input  = new Input($input);
+        $this->output = new Output();
+        $this->memory = new Memory();
+
+        $this->setLoopLimit($loopLimit);
 
         return $this;
     }
 
-    public function getLoopLimit(): int
+    /**
+     * @return VM
+     */
+    public function setLoopLimit(int $loopLimit = 100): self
     {
-        return $this->loopLimit;
+        $this->loopLimit = $loopLimit > 0 ? $loopLimit : 0;
+
+        return $this;
     }
 }
