@@ -4,8 +4,9 @@ use Brainfart\VM\Input;
 use Brainfart\VM\Memory;
 use Brainfart\VM\Output;
 use Brainfart\VM\VM;
+use PHPUnit\Framework\TestCase;
 
-class VMTest extends PHPUnit_Framework_TestCase
+class VMTest extends TestCase
 {
     public function testInput(): void
     {

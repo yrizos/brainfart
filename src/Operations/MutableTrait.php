@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 
 namespace Brainfart\Operations;
 
@@ -14,7 +14,7 @@ trait MutableTrait
         $this->setValue($value);
     }
 
-    public function setValue(int $value): self
+    public function setValue(int $value): MutableInterface
     {
         $this->value = is_numeric($value) ? (int) $value : 0;
 
@@ -33,7 +33,8 @@ trait MutableTrait
     {
         $class = static::class;
 
-        if ($operation instanceof $class) {
+        if ($operation instanceof $class)
+        {
             $this->setValue($this->getValue() + $operation->getValue());
 
             return $this;
@@ -41,4 +42,5 @@ trait MutableTrait
 
         return false;
     }
+
 }

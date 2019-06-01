@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 
 namespace Brainfart;
 
@@ -7,11 +7,11 @@ use Brainfart\Operations\InputOperation;
 use Brainfart\Operations\LoopOperation;
 use Brainfart\Operations\MoveOperation;
 use Brainfart\Operations\OutputOperation;
-use Brainfart\Operations\SleepOperation;
 use Brainfart\VM\Output;
 use Brainfart\VM\VM;
+use PHPUnit\Framework\TestCase;
 
-class OperationsTest extends PHPUnit_Framework_TestCase
+class OperationsTest extends TestCase
 {
     public function testIOOperation(): void
     {
@@ -48,11 +48,10 @@ class OperationsTest extends PHPUnit_Framework_TestCase
         $this->assertSame('Hello', $output);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testLoopLimitOperation(): void
     {
+        $this->expectException(\RuntimeException::class);
+
         $vm = new VM('Hello world!', 5);
 
         $ops = [
@@ -69,13 +68,5 @@ class OperationsTest extends PHPUnit_Framework_TestCase
 
         $loop = new LoopOperation($ops);
         $loop->execute($vm);
-    }
-
-    public function testSleepOperation(): void
-    {
-        $vm = new VM('Hello world!', 5);
-
-        $sleep = new SleepOperation();
-        $sleep->execute($vm);
     }
 }

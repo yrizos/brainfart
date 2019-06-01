@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 
 namespace Brainfart\Operations;
 
@@ -12,9 +12,12 @@ interface MutableInterface
     /**
      * @param int $value
      */
-    public function setValue(int $value): void;
+    public function setValue(int $value): self;
 
-    public function getValue(): void;
+    public function getValue(): int;
 
-    public function combine(self $operation): void;
+    /**
+     * @return bool|MutableTrait
+     */
+    public function combine(self $operation);
 }

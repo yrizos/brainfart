@@ -6,8 +6,9 @@ use Brainfart\Operations\ChangeOperation;
 use Brainfart\Operations\MoveOperation;
 use Brainfart\Parser\Loader;
 use Brainfart\Parser\Parser;
+use PHPUnit\Framework\TestCase;
 
-class ParserTest extends PHPUnit_Framework_TestCase
+class ParserTest extends TestCase
 {
     /**
      * @var string

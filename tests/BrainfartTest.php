@@ -3,8 +3,9 @@
 namespace Brainfart;
 
 use Brainfart\VM\Output;
+use PHPUnit\Framework\TestCase;
 
-class BrainfartTest extends PHPUnit_Framework_TestCase
+class BrainfartTest extends TestCase
 {
     /**
      * @var string

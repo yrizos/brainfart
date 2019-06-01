@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 
 namespace Brainfart;
 
@@ -41,18 +41,20 @@ class Brainfart
     /**
      * @return string[]|string
      */
-    public function run(string $source, string $input = '', int $fetchMode = Output::FETCH_ARRAY)
+    public function run(string $source, $input = '', int $fetchMode = Output::FETCH_ARRAY)
     {
         $this->parser->loadSource($source);
 
-        if ($this->parser->getFlag('string_output') === true) {
+        if ($this->parser->getFlag('string_output') === true)
+        {
             $fetchMode = Output::FETCH_STRING;
         }
 
         $appLoop  = $this->parser->parse($this->optimize);
         $appInput = $this->parser->getInput();
 
-        if (! empty($appInput)) {
+        if (! empty($appInput))
+        {
             $input = $appInput;
         }
 
@@ -62,4 +64,5 @@ class Brainfart
 
         return $this->vm->getOutput()->fetch($fetchMode);
     }
+
 }
