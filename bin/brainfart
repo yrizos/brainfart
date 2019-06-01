@@ -1,0 +1,58 @@
+#!/usr/bin/env php
+<?php
+declare (strict_types = 1);
+
+use Brainfart\Brainfart;
+use Brainfart\VM\Output;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+
+$composer_autoload = realpath(__DIR__ . '/../vendor/autoload.php');
+
+if (! $composer_autoload) {
+    throw new \RuntimeException('You need to setup dependencies using composer.');
+}
+
+require $composer_autoload;
+
+(new Application('brainfart', Brainfart::VERSION))
+
+    ->register('brainfart')
+    ->addArgument('path', InputArgument::REQUIRED, 'Path to the source file')
+    ->addArgument('input', InputArgument::OPTIONAL, 'Path to the source file')
+    ->addOption('loop_limit', 'l', InputOption::VALUE_REQUIRED, 'Limit of operations per loop', 100)
+    ->addOption('optimize', 'o', InputOption::VALUE_NONE, 'Peephole optimization')
+    ->addOption('string', 's', InputOption::VALUE_NONE, 'chr() result')
+    ->setCode(function (InputInterface $inputInterface, OutputInterface $outputInterface) {
+        $path  = $inputInterface->getArgument('path');
+        $input = $inputInterface->getArgument('input');
+        $input = explode(' ', $input);
+        $input = array_map('trim', $input);
+        $input = array_filter($input);
+
+        $loop_limit = (int) $inputInterface->getOption('loop_limit');
+        $optimize   = $inputInterface->getOption('optimize') === true;
+        $fetch_mode = $inputInterface->getOption('string') === true ? Output::FETCH_STRING : Output::FETCH_ARRAY;
+
+        if (! is_file($path) || ! is_readable($path)) {
+            throw new \InvalidArgumentException('path ' . $path . ' is invalid.');
+        }
+
+        if ($loop_limit < 1) {
+            throw new \InvalidArgumentException('loop_limit must be a positive integer.');
+        }
+
+        $brainfart = new Brainfart($loop_limit, $optimize);
+        $output    = $brainfart->run($path, $input, $fetch_mode);
+
+        if (is_array($output)) {
+            $output = implode(' ', $output);
+        }
+
+        $outputInterface->write($output);
+    })->getApplication()
+    ->setDefaultCommand('brainfart', true)
+    ->run();

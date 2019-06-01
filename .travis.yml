@@ -1,0 +1,14 @@
+language: php
+php: 
+  - 7.2
+
+install: 
+  - composer self-update
+  - composer install  
+
+before_script:  
+  - phpenv config-rm xdebug.ini || return 0
+
+script:
+  - composer phpstan
+  - composer tests

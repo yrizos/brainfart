@@ -1,11 +1,11 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace Brainfart\VM;
 
 /** @noinspection PhpDocSignatureInspection */
 class Output
 {
-    public const FETCH_ARRAY  = 0;
+    public const FETCH_ARRAY = 0;
 
     public const FETCH_STRING = 1;
 
@@ -13,6 +13,16 @@ class Output
      * @var string[]
      */
     private $output = [];
+
+    /**
+     * @return string[]|string
+     */
+    public function fetch(int $fetchMode = self::FETCH_ARRAY)
+    {
+        return $fetchMode === self::FETCH_STRING
+        ? implode('', array_map('chr', $this->output))
+        : $this->output;
+    }
 
     /**
      * @param int $value
@@ -24,15 +34,5 @@ class Output
         $this->output[] = $value;
 
         return $this;
-    }
-
-    /**
-     * @return string[]|string
-     */
-    public function fetch(int $fetchMode = self::FETCH_ARRAY)
-    {
-        return $fetchMode === self::FETCH_STRING
-        ? implode('', array_map('chr', $this->output))
-        : $this->output;
     }
 }

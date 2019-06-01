@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace Brainfart;
 
@@ -28,6 +28,20 @@ class ParserTest extends TestCase
         $this->assertSame($expected, $loader->getSource());
     }
 
+    public function testLoadSkinToad(): void
+    {
+        $loader = new Loader($this->dir . '/helloworld.sequences.bf');
+
+        $expected = '++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.';
+        $skintoad = $loader->getSource();
+
+        $loader->loadSource($this->dir . '/../scripts/helloworld.bf');
+        $original = $loader->getSource();
+
+        $this->assertSame($expected, $skintoad);
+        $this->assertSame($original, $skintoad);
+    }
+
     public function testLoadString(): void
     {
         $expected = '++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.';
@@ -55,18 +69,35 @@ class ParserTest extends TestCase
         $this->assertSame($expSource, $loader->getSource());
     }
 
-    public function testLoadSkinToad(): void
+    public function testParserMutableOperationsOptimized(): void
     {
-        $loader = new Loader($this->dir . '/helloworld.sequences.bf');
+        $parser     = new Parser('+++++>>++++>>++<<<<-----');
+        $operations = $parser->parse();
 
-        $expected = '++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.';
-        $skintoad = $loader->getSource();
+        $this->assertInstanceOf('Brainfart\\Operations\\LoopOperation', $operations);
+        $this->assertTrue($operations->getMaster());
 
-        $loader->loadSource($this->dir . '/../scripts/helloworld.bf');
-        $original = $loader->getSource();
+        $operations = $operations->getOperations();
 
-        $this->assertSame($expected, $skintoad);
-        $this->assertSame($original, $skintoad);
+        $expected =
+            [
+                new ChangeOperation(5),
+                new MoveOperation(2),
+                new ChangeOperation(4),
+                new MoveOperation(2),
+                new ChangeOperation(2),
+                new MoveOperation(-4),
+                new ChangeOperation(-5),
+            ];
+
+        foreach ($expected as $key => $value) {
+            $class = get_class($value);
+            $op    = $operations[$key];
+
+            $this->assertInstanceOf($class, $op);
+            /** @noinspection PhpUndefinedMethodInspection */
+            $this->assertSame($value->getValue(), $op->getValue());
+        }
     }
 
     public function testParserMutableOperationsUnoptimized(): void
@@ -90,37 +121,6 @@ class ParserTest extends TestCase
                 new ChangeOperation(-1),
                 new MoveOperation(-1),
                 new MoveOperation(-1),
-            ];
-
-        foreach ($expected as $key => $value) {
-            $class = get_class($value);
-            $op    = $operations[$key];
-
-            $this->assertInstanceOf($class, $op);
-            /** @noinspection PhpUndefinedMethodInspection */
-            $this->assertSame($value->getValue(), $op->getValue());
-        }
-    }
-
-    public function testParserMutableOperationsOptimized(): void
-    {
-        $parser     = new Parser('+++++>>++++>>++<<<<-----');
-        $operations = $parser->parse();
-
-        $this->assertInstanceOf('Brainfart\\Operations\\LoopOperation', $operations);
-        $this->assertTrue($operations->getMaster());
-
-        $operations = $operations->getOperations();
-
-        $expected =
-            [
-                new ChangeOperation(5),
-                new MoveOperation(2),
-                new ChangeOperation(4),
-                new MoveOperation(2),
-                new ChangeOperation(2),
-                new MoveOperation(-4),
-                new ChangeOperation(-5),
             ];
 
         foreach ($expected as $key => $value) {

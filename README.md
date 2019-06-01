@@ -1,8 +1,11 @@
-# Brainfart
+# Brainfart [![Build Status](https://travis-ci.org/yrizos/brainfart.svg?branch=master)](https://travis-ci.org/yrizos/brainfart)
 
-Brainfart is an over-engineered [Brainfuck interpreter](http://esolangs.org/wiki/Brainfuck), written in PHP.
 
-It's a weekend pet project, nowhere near complete and slow as hell (by design). 
+Brainfart is [Brainfuck interpreter](http://esolangs.org/wiki/Brainfuck), in PHP. 
+
+Try it out: 
+
+    ./bin/brainfart ./tests/scripts/sort.bf "100 5 99 200" 
 
 ## Syntax
 
@@ -54,4 +57,4 @@ This may or may not improve performance.
 
 **Bugs**
 
-There are probably a ton of bugs. They are all intentional, to make coding in Brainfart a bit more challenging and fun. `</lie>
+There are probably a ton of bugs. They are all intentional, to make coding in Brainfart a bit more challenging and fun. `</lie>`

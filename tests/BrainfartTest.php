@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare (strict_types = 1);
 
 namespace Brainfart;
 
@@ -8,20 +8,14 @@ use PHPUnit\Framework\TestCase;
 class BrainfartTest extends TestCase
 {
     /**
-     * @var string
-     */
-    private $dir = '';
-
-    /**
      * @var Brainfart
      */
     private $bf;
 
-    protected function setUp(): void
-    {
-        $this->dir = realpath(__DIR__ . '/scripts');
-        $this->bf  = new Brainfart(1000, true);
-    }
+    /**
+     * @var string
+     */
+    private $dir = '';
 
     public function testHelloWorld(): void
     {
@@ -53,5 +47,11 @@ class BrainfartTest extends TestCase
         $expected = [1, 2, 3, 4];
 
         $this->assertSame($expected, $output);
+    }
+
+    protected function setUp(): void
+    {
+        $this->dir = realpath(__DIR__ . '/scripts');
+        $this->bf  = new Brainfart(1000, true);
     }
 }

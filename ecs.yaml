@@ -8,4 +8,6 @@ parameters:
   skip:
     PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer: ~
 
+    PhpCsFixer\Fixer\LanguageConstruct\DeclareEqualNormalizeFixer: ~
+
     PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\AssignmentInConditionSniff.FoundInWhileCondition:

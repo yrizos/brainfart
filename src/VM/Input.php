@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace Brainfart\VM;
 
@@ -17,13 +17,20 @@ class Input
         $this->store($input);
     }
 
+    public function fetch(): int
+    {
+        return ! (empty($this->input)) ? array_shift($this->input) : 0;
+    }
+
     /**
      * @param scalar|scalar[] $input
      */
     public function store($input): self
     {
-        if (is_scalar($input)) {
-            $input = str_split(trim($input));
+        if (is_scalar($input) || $input === null) {
+            $input = strval($input);
+            $input = trim($input);
+            $input = str_split($input);
         }
 
         if (! is_array($input)) {
@@ -37,10 +44,5 @@ class Input
         $this->input = $input;
 
         return $this;
-    }
-
-    public function fetch(): int
-    {
-        return ! (empty($this->input)) ? array_shift($this->input) : 0;
     }
 }
