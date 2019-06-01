@@ -1,10 +1,11 @@
-# Brainfart
+# Brainfart [![Build Status](https://travis-ci.org/yrizos/brainfart.svg?branch=master)](https://travis-ci.org/yrizos/brainfart)
 
-Brainfart is [Brainfuck interpreter](http://esolangs.org/wiki/Brainfuck), in PHP.
+
+Brainfart is [Brainfuck interpreter](http://esolangs.org/wiki/Brainfuck), in PHP. 
 
 Try it out: 
 
-    
+    ./bin/brainfart ./tests/scripts/sort.bf "100 5 99 200" 
 
 ## Syntax
 
