@@ -10,4 +10,4 @@ parameters:
 
     PhpCsFixer\Fixer\LanguageConstruct\DeclareEqualNormalizeFixer: ~
 
-    PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\AssignmentInConditionSniff.FoundInWhileCondition:
+    PhpCsFixer\Fixer\Basic\BracesFixer: ~
